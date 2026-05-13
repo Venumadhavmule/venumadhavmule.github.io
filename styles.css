@@ -721,16 +721,13 @@ section { padding: 7rem 5vw; }
   transition: border-color 0.25s;
 }
 .cert-card:hover { border-color: var(--amber-dim); }
-.cert-mono {
-  width: 38px; height: 38px; flex-shrink: 0;
-  background: var(--amber-glow);
-  border: 1px solid rgba(245,166,35,0.2);
-  border-radius: 9px;
+.cert-logo {
+  width: 44px; height: 44px; flex-shrink: 0;
+  background: var(--bg4); border: 1px solid var(--border2);
+  border-radius: 10px; overflow: hidden;
   display: flex; align-items: center; justify-content: center;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem; font-weight: 700; color: var(--amber);
-  letter-spacing: 0.02em;
 }
+.cert-logo img { width: 36px; height: 36px; object-fit: contain; }
 .cert-name { font-size: 0.9rem; font-weight: 600; color: var(--text); }
 .cert-issuer {
   font-family: 'JetBrains Mono', monospace;
