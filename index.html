@@ -2,2114 +2,854 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Venumadhav Reddy Mule — Full Stack Engineer</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Figtree:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
-        rel="stylesheet" />
-    <style>
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        :root {
-            --bg: #060608;
-            --bg2: #0C0C12;
-            --bg3: #13131C;
-            --bg4: #1A1A26;
-            --amber: #F5A623;
-            --amber-dim: #C27C0E;
-            --teal: #52D9C0;
-            --text: #E8E8F2;
-            --muted: #7070868;
-            --muted2: #55556A;
-            --border: #22222F;
-            --border2: #2E2E3F;
-            --radius: 12px;
-            --radius-lg: 20px;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            font-size: 16px;
-        }
-
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Figtree', sans-serif;
-            font-weight: 400;
-            line-height: 1.7;
-            overflow-x: hidden;
-            cursor: none;
-        }
-
-        /* ── CUSTOM CURSOR ─────────────────────────────────── */
-        #cursor {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 9999;
-            width: 10px;
-            height: 10px;
-            background: var(--amber);
-            border-radius: 50%;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            transition: transform 0.08s ease, width 0.2s, height 0.2s, background 0.2s;
-        }
-
-        #cursor-ring {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 9998;
-            width: 36px;
-            height: 36px;
-            border: 1.5px solid var(--amber);
-            border-radius: 50%;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            transition: transform 0.18s ease, width 0.25s, height 0.25s, opacity 0.2s;
-            opacity: 0.5;
-        }
-
-        body:hover #cursor {
-            opacity: 1;
-        }
-
-        .cursor-hover #cursor {
-            width: 16px;
-            height: 16px;
-            background: var(--teal);
-        }
-
-        .cursor-hover #cursor-ring {
-            width: 52px;
-            height: 52px;
-            opacity: 0.3;
-            border-color: var(--teal);
-        }
-
-        /* ── SCROLLBAR ─────────────────────────────────────── */
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--bg);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--amber-dim);
-            border-radius: 4px;
-        }
-
-        /* ── NAV ───────────────────────────────────────────── */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1.4rem 5vw;
-            transition: background 0.4s, backdrop-filter 0.4s, border-color 0.4s;
-            border-bottom: 1px solid transparent;
-        }
-
-        nav.scrolled {
-            background: rgba(6, 6, 8, 0.85);
-            backdrop-filter: blur(20px);
-            border-color: var(--border);
-        }
-
-        .nav-logo {
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 700;
-            font-size: 1.05rem;
-            color: var(--amber);
-            letter-spacing: 0.05em;
-            text-decoration: none;
-        }
-
-        .nav-logo span {
-            color: var(--text);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2.5rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            font-size: 0.82rem;
-            font-weight: 500;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--text);
-            text-decoration: none;
-            position: relative;
-            opacity: 0.7;
-            transition: opacity 0.2s, color 0.2s;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--amber);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover,
-        .nav-links a.active {
-            opacity: 1;
-            color: var(--amber);
-        }
-
-        .nav-links a:hover::after,
-        .nav-links a.active::after {
-            width: 100%;
-        }
-
-        .nav-cta {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--bg);
-            background: var(--amber);
-            padding: 0.55rem 1.4rem;
-            border-radius: 4px;
-            text-decoration: none;
-            transition: background 0.2s, transform 0.2s;
-        }
-
-        .nav-cta:hover {
-            background: #ffc04d;
-            transform: translateY(-1px);
-        }
-
-        .nav-mobile-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text);
-            font-size: 1.5rem;
-            cursor: none;
-        }
-
-        /* ── HERO ──────────────────────────────────────────── */
-        #hero {
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 8rem 5vw 5rem;
-            overflow: hidden;
-        }
-
-        #hero-canvas {
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-            opacity: 0.55;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 760px;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.72rem;
-            font-weight: 500;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--amber);
-            border: 1px solid var(--amber-dim);
-            padding: 0.3rem 0.9rem;
-            border-radius: 100px;
-            margin-bottom: 2rem;
-            opacity: 0;
-            animation: fadeUp 0.8s 0.3s forwards;
-        }
-
-        .hero-badge::before {
-            content: '';
-            width: 6px;
-            height: 6px;
-            background: var(--amber);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-
-            50% {
-                opacity: 0.4;
-                transform: scale(0.7);
-            }
-        }
-
-        .hero-name {
-            font-family: 'DM Serif Display', serif;
-            font-size: clamp(3.2rem, 7vw, 6.5rem);
-            line-height: 0.95;
-            color: var(--text);
-            margin-bottom: 0.3rem;
-            opacity: 0;
-            animation: fadeUp 0.9s 0.5s forwards;
-        }
-
-        .hero-name em {
-            font-style: italic;
-            color: var(--amber);
-        }
-
-        .hero-subtitle {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: clamp(0.85rem, 1.8vw, 1.1rem);
-            color: var(--teal);
-            margin: 1.2rem 0 0.6rem;
-            opacity: 0;
-            animation: fadeUp 0.9s 0.7s forwards;
-            min-height: 1.6em;
-        }
-
-        .hero-subtitle .cursor-blink {
-            display: inline-block;
-            width: 2px;
-            height: 1.1em;
-            background: var(--teal);
-            margin-left: 2px;
-            vertical-align: text-bottom;
-            animation: blink 0.8s infinite;
-        }
-
-        @keyframes blink {
-
-            0%,
-            49% {
-                opacity: 1
-            }
-
-            50%,
-            100% {
-                opacity: 0
-            }
-        }
-
-        .hero-desc {
-            font-size: 1.05rem;
-            color: #9090A8;
-            max-width: 560px;
-            margin: 1.4rem 0 2.5rem;
-            line-height: 1.8;
-            opacity: 0;
-            animation: fadeUp 0.9s 0.9s forwards;
-        }
-
-        .hero-actions {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            opacity: 0;
-            animation: fadeUp 0.9s 1.1s forwards;
-        }
-
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.78rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--bg);
-            background: var(--amber);
-            padding: 0.85rem 2rem;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 24px rgba(245, 166, 35, 0.25);
-        }
-
-        .btn-primary:hover {
-            background: #ffc04d;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(245, 166, 35, 0.35);
-        }
-
-        .btn-secondary {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.78rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--text);
-            background: transparent;
-            border: 1px solid var(--border2);
-            padding: 0.85rem 2rem;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: border-color 0.2s, color 0.2s, transform 0.2s;
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--amber);
-            color: var(--amber);
-            transform: translateY(-2px);
-        }
-
-        .hero-stats {
-            position: absolute;
-            right: 5vw;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            z-index: 1;
-            opacity: 0;
-            animation: fadeLeft 1s 1.3s forwards;
-        }
-
-        .stat-card {
-            background: var(--bg3);
-            border: 1px solid var(--border2);
-            border-radius: var(--radius);
-            padding: 1.4rem 1.8rem;
-            text-align: center;
-            min-width: 130px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--amber), var(--teal));
-        }
-
-        .stat-num {
-            font-family: 'DM Serif Display', serif;
-            font-size: 2.4rem;
-            color: var(--amber);
-            line-height: 1;
-        }
-
-        .stat-label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.65rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: #606075;
-            margin-top: 0.3rem;
-        }
-
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeLeft {
-            from {
-                opacity: 0;
-                transform: translate(30px, -50%);
-            }
-
-            to {
-                opacity: 1;
-                transform: translate(0, -50%);
-            }
-        }
-
-        /* ── SECTION BASE ──────────────────────────────────── */
-        section {
-            padding: 7rem 5vw;
-        }
-
-        .section-label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--amber);
-            margin-bottom: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-
-        .section-label::before {
-            content: '//';
-            opacity: 0.5;
-        }
-
-        .section-title {
-            font-family: 'DM Serif Display', serif;
-            font-size: clamp(2rem, 4vw, 3.2rem);
-            line-height: 1.1;
-            color: var(--text);
-            margin-bottom: 1rem;
-        }
-
-        .section-title em {
-            font-style: italic;
-            color: var(--amber);
-        }
-
-        .section-desc {
-            font-size: 1rem;
-            color: #7A7A90;
-            max-width: 540px;
-            line-height: 1.8;
-        }
-
-        .divider {
-            width: 40px;
-            height: 2px;
-            background: linear-gradient(90deg, var(--amber), transparent);
-            margin: 1.5rem 0 3rem;
-        }
-
-        /* ── SCROLL REVEAL ─────────────────────────────────── */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: none;
-        }
-
-        .reveal-delay-1 {
-            transition-delay: 0.1s;
-        }
-
-        .reveal-delay-2 {
-            transition-delay: 0.2s;
-        }
-
-        .reveal-delay-3 {
-            transition-delay: 0.3s;
-        }
-
-        .reveal-delay-4 {
-            transition-delay: 0.4s;
-        }
-
-        /* ── ABOUT ─────────────────────────────────────────── */
-        #about {
-            background: var(--bg2);
-        }
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 5rem;
-            align-items: center;
-            margin-top: 4rem;
-        }
-
-        .about-text p {
-            color: #9090A8;
-            font-size: 1rem;
-            line-height: 1.9;
-            margin-bottom: 1.2rem;
-        }
-
-        .about-text p strong {
-            color: var(--text);
-            font-weight: 600;
-        }
-
-        .about-text p .amber {
-            color: var(--amber);
-            font-weight: 600;
-        }
-
-        .about-right {
-            display: flex;
-            flex-direction: column;
-            gap: 1.2rem;
-        }
-
-        .info-card {
-            background: var(--bg3);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1.5rem 1.8rem;
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            transition: border-color 0.3s, transform 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .info-card::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(245, 166, 35, 0.04), transparent);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .info-card:hover {
-            border-color: var(--amber-dim);
-            transform: translateX(4px);
-        }
-
-        .info-card:hover::after {
-            opacity: 1;
-        }
-
-        .info-icon {
-            font-size: 1.4rem;
-            flex-shrink: 0;
-            margin-top: 0.1rem;
-        }
-
-        .info-card-title {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.72rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--amber);
-            margin-bottom: 0.25rem;
-        }
-
-        .info-card-val {
-            font-size: 0.92rem;
-            color: var(--text);
-            font-weight: 500;
-        }
-
-        /* ── SKILLS ────────────────────────────────────────── */
-        #skills {
-            background: var(--bg);
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-top: 4rem;
-        }
-
-        .skill-group {
-            background: var(--bg3);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            transition: border-color 0.3s;
-        }
-
-        .skill-group:hover {
-            border-color: var(--border2);
-        }
-
-        .skill-group-header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .skill-group-icon {
-            width: 38px;
-            height: 38px;
-            background: rgba(245, 166, 35, 0.1);
-            border: 1px solid rgba(245, 166, 35, 0.2);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-        }
-
-        .skill-group-name {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--text);
-        }
-
-        .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .skill-tag {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.72rem;
-            font-weight: 500;
-            color: #9090A8;
-            background: var(--bg4);
-            border: 1px solid var(--border);
-            padding: 0.3rem 0.75rem;
-            border-radius: 4px;
-            transition: color 0.2s, border-color 0.2s, background 0.2s;
-        }
-
-        .skill-tag:hover {
-            color: var(--amber);
-            border-color: var(--amber-dim);
-            background: rgba(245, 166, 35, 0.06);
-        }
-
-        .skill-tag.hot {
-            color: var(--amber);
-            border-color: rgba(245, 166, 35, 0.4);
-            background: rgba(245, 166, 35, 0.08);
-        }
-
-        /* ── EXPERIENCE ────────────────────────────────────── */
-        #experience {
-            background: var(--bg2);
-        }
-
-        .timeline {
-            margin-top: 4rem;
-            position: relative;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 22px;
-            top: 0;
-            bottom: 0;
-            width: 1px;
-            background: linear-gradient(to bottom, var(--amber), var(--border), transparent);
-        }
-
-        .timeline-item {
-            display: flex;
-            gap: 2.5rem;
-            margin-bottom: 3.5rem;
-            position: relative;
-        }
-
-        .timeline-dot {
-            flex-shrink: 0;
-            width: 44px;
-            height: 44px;
-            background: var(--bg3);
-            border: 2px solid var(--border2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            z-index: 1;
-            transition: border-color 0.3s;
-        }
-
-        .timeline-item:hover .timeline-dot {
-            border-color: var(--amber);
-        }
-
-        .timeline-body {
-            flex: 1;
-        }
-
-        .timeline-company {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.72rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--amber);
-            margin-bottom: 0.3rem;
-        }
-
-        .timeline-role {
-            font-family: 'DM Serif Display', serif;
-            font-size: 1.5rem;
-            color: var(--text);
-            margin-bottom: 0.2rem;
-        }
-
-        .timeline-period {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--muted2);
-            letter-spacing: 0.08em;
-            margin-bottom: 1rem;
-        }
-
-        .timeline-card {
-            background: var(--bg3);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1.5rem 1.8rem;
-            transition: border-color 0.3s;
-        }
-
-        .timeline-item:hover .timeline-card {
-            border-color: var(--border2);
-        }
-
-        .timeline-desc {
-            list-style: none;
-        }
-
-        .timeline-desc li {
-            font-size: 0.9rem;
-            color: #8585A0;
-            line-height: 1.7;
-            margin-bottom: 0.4rem;
-            padding-left: 1.2rem;
-            position: relative;
-        }
-
-        .timeline-desc li::before {
-            content: '→';
-            position: absolute;
-            left: 0;
-            color: var(--amber-dim);
-            font-size: 0.8rem;
-        }
-
-        .timeline-tech {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.4rem;
-            margin-top: 1rem;
-        }
-
-        .tech-badge {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.65rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--teal);
-            background: rgba(82, 217, 192, 0.08);
-            border: 1px solid rgba(82, 217, 192, 0.2);
-            padding: 0.2rem 0.6rem;
-            border-radius: 3px;
-        }
-
-        /* ── PROJECTS ──────────────────────────────────────── */
-        #projects {
-            background: var(--bg);
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1.5rem;
-            margin-top: 4rem;
-        }
-
-        .project-card {
-            background: var(--bg3);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
-            position: relative;
-            overflow: hidden;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--amber), var(--teal));
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.4s ease;
-        }
-
-        .project-card:hover {
-            transform: translateY(-6px);
-            border-color: var(--border2);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-        }
-
-        .project-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .project-card.featured {
-            grid-column: span 2;
-        }
-
-        .project-header {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            margin-bottom: 1.2rem;
-        }
-
-        .project-icon {
-            width: 46px;
-            height: 46px;
-            background: rgba(245, 166, 35, 0.08);
-            border: 1px solid rgba(245, 166, 35, 0.2);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3rem;
-        }
-
-        .project-links {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .project-link {
-            width: 32px;
-            height: 32px;
-            background: var(--bg4);
-            border: 1px solid var(--border2);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #7070868;
-            font-size: 0.85rem;
-            text-decoration: none;
-            transition: color 0.2s, border-color 0.2s;
-        }
-
-        .project-link:hover {
-            color: var(--amber);
-            border-color: var(--amber-dim);
-        }
-
-        .project-name {
-            font-family: 'DM Serif Display', serif;
-            font-size: 1.4rem;
-            color: var(--text);
-            margin-bottom: 0.5rem;
-        }
-
-        .project-type {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.65rem;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--amber);
-            margin-bottom: 0.8rem;
-        }
-
-        .project-desc {
-            font-size: 0.88rem;
-            color: #7878908;
-            line-height: 1.75;
-            flex: 1;
-            color: #858599;
-        }
-
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.4rem;
-            margin-top: 1.3rem;
-        }
-
-        .project-tag {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.62rem;
-            font-weight: 700;
-            letter-spacing: 0.07em;
-            text-transform: uppercase;
-            color: #5A5A70;
-            background: var(--bg4);
-            border: 1px solid var(--border);
-            padding: 0.2rem 0.55rem;
-            border-radius: 3px;
-        }
-
-        .open-source-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.62rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--teal);
-            background: rgba(82, 217, 192, 0.08);
-            border: 1px solid rgba(82, 217, 192, 0.25);
-            padding: 0.2rem 0.6rem;
-            border-radius: 3px;
-        }
-
-        /* ── EDUCATION & CERTS ─────────────────────────────── */
-        #education {
-            background: var(--bg2);
-        }
-
-        .edu-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            margin-top: 4rem;
-        }
-
-        .edu-card {
-            background: var(--bg3);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            transition: border-color 0.3s, transform 0.3s;
-        }
-
-        .edu-card:hover {
-            border-color: var(--border2);
-            transform: translateY(-3px);
-        }
-
-        .edu-year {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.68rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--amber);
-            margin-bottom: 0.5rem;
-        }
-
-        .edu-degree {
-            font-family: 'DM Serif Display', serif;
-            font-size: 1.3rem;
-            color: var(--text);
-            margin-bottom: 0.3rem;
-        }
-
-        .edu-school {
-            font-size: 0.88rem;
-            color: #7A7A90;
-            margin-bottom: 0.8rem;
-        }
-
-        .edu-grade {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            color: var(--teal);
-        }
-
-        .certs-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .cert-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            background: var(--bg3);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1.2rem 1.5rem;
-            transition: border-color 0.3s;
-        }
-
-        .cert-item:hover {
-            border-color: var(--amber-dim);
-        }
-
-        .cert-issuer-icon {
-            width: 36px;
-            height: 36px;
-            background: rgba(245, 166, 35, 0.08);
-            border: 1px solid rgba(245, 166, 35, 0.2);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            flex-shrink: 0;
-        }
-
-        .cert-name {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text);
-        }
-
-        .cert-issuer {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--muted2);
-            margin-top: 0.15rem;
-        }
-
-        /* ── CONTACT ───────────────────────────────────────── */
-        #contact {
-            background: var(--bg);
-            text-align: center;
-        }
-
-        .contact-inner {
-            max-width: 640px;
-            margin: 0 auto;
-        }
-
-        .contact-email {
-            font-family: 'DM Serif Display', serif;
-            font-size: clamp(1.6rem, 3vw, 2.5rem);
-            color: var(--amber);
-            text-decoration: none;
-            display: block;
-            margin: 2rem 0;
-            transition: opacity 0.2s;
-        }
-
-        .contact-email:hover {
-            opacity: 0.75;
-        }
-
-        .social-row {
-            display: flex;
-            justify-content: center;
-            gap: 1.2rem;
-            margin-top: 2rem;
-        }
-
-        .social-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--text);
-            background: var(--bg3);
-            border: 1px solid var(--border2);
-            padding: 0.75rem 1.5rem;
-            border-radius: 6px;
-            text-decoration: none;
-            transition: border-color 0.2s, color 0.2s, transform 0.2s;
-        }
-
-        .social-btn:hover {
-            border-color: var(--amber);
-            color: var(--amber);
-            transform: translateY(-2px);
-        }
-
-        .social-btn svg {
-            width: 16px;
-            height: 16px;
-            fill: currentColor;
-            flex-shrink: 0;
-        }
-
-        /* ── FOOTER ────────────────────────────────────────── */
-        footer {
-            background: var(--bg);
-            border-top: 1px solid var(--border);
-            padding: 2.5rem 5vw;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .footer-copy {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--muted2);
-            letter-spacing: 0.06em;
-        }
-
-        .footer-copy span {
-            color: var(--amber);
-        }
-
-        .back-top {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--muted2);
-            text-decoration: none;
-            letter-spacing: 0.08em;
-            transition: color 0.2s;
-        }
-
-        .back-top:hover {
-            color: var(--amber);
-        }
-
-        /* ── RESPONSIVE ────────────────────────────────────── */
-        @media (max-width: 900px) {
-            .hero-stats {
-                display: none;
-            }
-
-            .about-grid {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-            }
-
-            .edu-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .project-card.featured {
-                grid-column: span 1;
-            }
-
-            .nav-links,
-            .nav-cta {
-                display: none;
-            }
-
-            .nav-mobile-btn {
-                display: block;
-            }
-        }
-
-        @media (max-width: 600px) {
-            section {
-                padding: 5rem 6vw;
-            }
-
-            .hero-actions {
-                flex-direction: column;
-            }
-
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .social-row {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-
-        /* ── MOBILE NAV ────────────────────────────────────── */
-        #mobile-nav {
-            position: fixed;
-            inset: 0;
-            z-index: 999;
-            background: rgba(6, 6, 8, 0.97);
-            backdrop-filter: blur(20px);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 2.5rem;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s;
-        }
-
-        #mobile-nav.open {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        #mobile-nav a {
-            font-family: 'DM Serif Display', serif;
-            font-size: 2.2rem;
-            color: var(--text);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        #mobile-nav a:hover {
-            color: var(--amber);
-        }
-
-        #mobile-nav .close-btn {
-            position: absolute;
-            top: 1.5rem;
-            right: 5vw;
-            font-size: 1.6rem;
-            background: none;
-            border: none;
-            color: var(--text);
-            cursor: none;
-        }
-
-        /* ── GLOW SEPARATOR ────────────────────────────────── */
-        .glow-sep {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--amber-dim), transparent);
-            opacity: 0.4;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Venumadhav Reddy Mule — Full Stack Engineer specialising in Java, Spring Boot, Microservices, Distributed Systems and AI integrations. Based in Hyderabad, India." />
+  <title>Venumadhav Reddy Mule - Full Stack Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Figtree:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
 
-    <div id="cursor"></div>
-    <div id="cursor-ring"></div>
+  <!-- ════════ CURSOR ════════════════════════════════════ -->
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
 
-    <!-- ──────────────────────────────────────────────── NAV -->
-    <nav id="navbar">
-        <a class="nav-logo" href="#hero">VM<span>.</span></a>
-        <ul class="nav-links">
-            <li><a href="#about">About</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#experience">Experience</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-        <a class="nav-cta hover-target" href="https://linkedin.com/in/venumadhav-mule/" target="_blank"
-            rel="noopener">LinkedIn ↗</a>
-        <button class="nav-mobile-btn" id="mobile-open">&#9776;</button>
-    </nav>
+  <!-- ════════ NAV ══════════════════════════════════════ -->
+  <nav id="navbar">
+    <a class="nav-logo" href="#hero">VM<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a class="nav-cta" href="https://linkedin.com/in/venumadhav-mule/" target="_blank" rel="noopener">LinkedIn
+      &#8599;</a>
+    <button class="nav-mobile-btn" id="mobile-open" aria-label="Open menu">&#9776;</button>
+  </nav>
 
-    <!-- mobile nav -->
-    <div id="mobile-nav">
-        <button class="close-btn" id="mobile-close">&#10005;</button>
-        <a href="#about" class="mob-link">About</a>
-        <a href="#skills" class="mob-link">Skills</a>
-        <a href="#experience" class="mob-link">Experience</a>
-        <a href="#projects" class="mob-link">Projects</a>
-        <a href="#education" class="mob-link">Education</a>
-        <a href="#contact" class="mob-link">Contact</a>
+  <!-- Mobile nav overlay -->
+  <div id="mobile-nav" role="dialog" aria-label="Navigation menu">
+    <button class="mobile-close-btn" id="mobile-close" aria-label="Close menu">&#10005;</button>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#education">Education</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <!-- ════════ HERO ═════════════════════════════════════ -->
+  <section id="hero">
+    <canvas id="hero-canvas" aria-hidden="true"></canvas>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Available for Opportunities
+      </div>
+      <h1 class="hero-name">
+        Venumadhav<br><em>Reddy Mule</em>
+      </h1>
+      <div class="hero-typewriter" aria-live="polite">
+        <span id="typewriter-text"></span><span class="tw-cursor" aria-hidden="true"></span>
+      </div>
+      <p class="hero-desc">
+        Full Stack Engineer with a backend-first mindset, building distributed systems,
+        payment flows, and AI-driven platforms that hold up under real-world pressure.
+        Based in Hyderabad, India.
+      </p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="#projects">View Projects &rarr;</a>
+        <a class="btn-outline" href="https://github.com/Venumadhavmule" target="_blank" rel="noopener">GitHub
+          &#8599;</a>
+      </div>
     </div>
 
-    <!-- ──────────────────────────────────────────────── HERO -->
-    <section id="hero">
-        <canvas id="hero-canvas"></canvas>
+    <div class="hero-stats" aria-label="Quick stats">
+      <div class="stat-card">
+        <div class="stat-num">17+</div>
+        <div class="stat-label">Months of Total<br>Experience</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">16</div>
+        <div class="stat-label">LLM Providers<br>in LLMate</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">4</div>
+        <div class="stat-label">AI Products<br>Shipped</div>
+      </div>
+    </div>
+  </section>
 
-        <div class="hero-content">
-            <div class="hero-badge">Available for opportunities</div>
-            <h1 class="hero-name">
-                Venumadhav<br><em>Reddy Mule</em>
-            </h1>
-            <div class="hero-subtitle">
-                <span id="typewriter"></span><span class="cursor-blink"></span>
-            </div>
-            <p class="hero-desc">
-                Full Stack Engineer with a backend-first mindset — building distributed systems, payment flows,
-                and AI-driven platforms that hold up under real-world pressure. Based in
-                Hyderabad, India.
-            </p>
-            <div class="hero-actions">
-                <a class="btn-primary hover-target" href="#projects">
-                    <span>View Projects</span>
-                    <span>→</span>
-                </a>
-                <a class="btn-secondary hover-target" href="https://github.com/Venumadhavmule" target="_blank"
-                    rel="noopener">
-                    <span>GitHub ↗</span>
-                </a>
-            </div>
+  <div class="glow-sep" aria-hidden="true"></div>
+
+  <!-- ════════ ABOUT ════════════════════════════════════ -->
+  <section id="about">
+    <div class="section-head">
+      <div class="section-label reveal">About Me</div>
+      <h2 class="section-title reveal reveal-d1">Backend engineer.<br><em>Full-stack thinker.</em></h2>
+      <div class="section-divider reveal reveal-d2"></div>
+    </div>
+
+    <div class="about-grid">
+
+      <!-- Profile picture -->
+      <div class="profile-wrap reveal">
+        <div class="profile-img-container">
+          <img src="profile-pic.png" alt="Venumadhav Reddy Mule" class="profile-photo" loading="lazy" />
+          <div class="profile-orbit" aria-hidden="true"></div>
+          <div class="profile-status">
+            <span class="status-dot"></span>
+            Open to Work
+          </div>
+        </div>
+        <div class="profile-mini-tags" aria-hidden="true">
+          <span>Java</span>
+          <span>Hyderabad</span>
+          <span>3k+ Connections</span>
+        </div>
+      </div>
+
+      <!-- Bio + info cards -->
+      <div class="about-right">
+        <div class="about-text reveal reveal-d1">
+          <p>
+            I am a <strong>Full Stack Engineer</strong> at <span class="hi">AutonomOps AI</span> in Hyderabad,
+            where I build the backend infrastructure powering AI-driven SRE and architecture tools.
+            My focus is on systems that work when they need to: under load, under failure, under pressure.
+          </p>
+          <p>
+            My foundation is Java and Spring Boot. I have built microservices, payment processors,
+            REST APIs, and distributed system components using resilience patterns including circuit breakers,
+            caching, and fault tolerance. End-to-end features shipped across <strong>HealR</strong>,
+            <strong>Architecto.dev</strong>, and my own open-source <strong>LLMate</strong> gateway.
+          </p>
+          <p>
+            I keep expanding my scope: Android development with Kotlin and Jetpack Compose, frontend
+            work, and agentic AI integrations. My path is <span class="hi">technical depth first</span>,
+            then functional breadth.
+          </p>
         </div>
 
-        <div class="hero-stats">
-            <div class="stat-card">
-                <div class="stat-num">11+</div>
-                <div class="stat-label">Months at<br>AutonomOps</div>
+        <div class="info-grid reveal reveal-d2">
+          <div class="info-card">
+            <div class="info-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M12 21s-8-6.8-8-12a8 8 0 1116 0c0 5.2-8 12-8 12z" />
+                <circle cx="12" cy="9" r="2.5" />
+              </svg>
             </div>
-            <div class="stat-card">
-                <div class="stat-num">16</div>
-                <div class="stat-label">LLM Providers<br>in LLMate</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-num">4</div>
-                <div class="stat-label">AI Products<br>Shipped</div>
-            </div>
-        </div>
-    </section>
-
-    <div class="glow-sep"></div>
-
-    <!-- ──────────────────────────────────────────────── ABOUT -->
-    <section id="about">
-        <div class="section-label reveal">About Me</div>
-        <h2 class="section-title reveal reveal-delay-1">Backend engineer.<br><em>Full-stack thinker.</em></h2>
-        <div class="divider reveal reveal-delay-2"></div>
-
-        <div class="about-grid">
-            <div class="about-text reveal reveal-delay-2">
-                <p>
-                    I'm a <strong>Full Stack Engineer</strong> at <span class="amber">AutonomOps AI</span> in Hyderabad,
-                    where I build the
-                    backend infrastructure behind AI-powered SRE and architecture tools. My focus is on
-                    systems that actually work when they're supposed to — under load, under failure, under pressure.
-                </p>
-                <p>
-                    My foundation is Java and Spring Boot, where I've built microservices, payment processors,
-                    REST APIs, and distributed system components with resilience patterns (circuit breakers,
-                    caching, fault tolerance). I've shipped end-to-end features across <strong>HealR</strong>
-                    (Agentic AI SRE), <strong>Architecto.dev</strong>, and my own open-source
-                    <strong>LLMate</strong> gateway.
-                </p>
-                <p>
-                    I keep expanding my scope — Android dev with Kotlin & Jetpack Compose, frontend work,
-                    agentic AI integrations. I believe in <span class="amber">technical depth first</span>,
-                    then functional breadth.
-                </p>
-            </div>
-            <div class="about-right">
-                <div class="info-card reveal reveal-delay-1">
-                    <div class="info-icon">📍</div>
-                    <div>
-                        <div class="info-card-title">Location</div>
-                        <div class="info-card-val">Hyderabad, Telangana, India</div>
-                    </div>
-                </div>
-                <div class="info-card reveal reveal-delay-2">
-                    <div class="info-icon">🏢</div>
-                    <div>
-                        <div class="info-card-title">Currently At</div>
-                        <div class="info-card-val">AutonomOps AI — Full Stack Engineer</div>
-                    </div>
-                </div>
-                <div class="info-card reveal reveal-delay-3">
-                    <div class="info-icon">🎓</div>
-                    <div>
-                        <div class="info-card-title">Education</div>
-                        <div class="info-card-val">B.E. Computer Science — AIT Gudur (8.2 GPA)</div>
-                    </div>
-                </div>
-                <div class="info-card reveal reveal-delay-4">
-                    <div class="info-icon">⚡</div>
-                    <div>
-                        <div class="info-card-title">Focus Areas</div>
-                        <div class="info-card-val">Microservices · Payment Systems · Agentic AI</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div class="glow-sep"></div>
-
-    <!-- ──────────────────────────────────────────────── SKILLS -->
-    <section id="skills">
-        <div class="section-label reveal">Technical Stack</div>
-        <h2 class="section-title reveal reveal-delay-1">What I build <em>with.</em></h2>
-        <div class="divider reveal reveal-delay-2"></div>
-
-        <div class="skills-grid">
-
-            <div class="skill-group reveal reveal-delay-1">
-                <div class="skill-group-header">
-                    <div class="skill-group-icon">⚙️</div>
-                    <div class="skill-group-name">Backend Core</div>
-                </div>
-                <div class="skill-tags">
-                    <span class="skill-tag hot">Java</span>
-                    <span class="skill-tag hot">Spring Boot</span>
-                    <span class="skill-tag hot">Microservices</span>
-                    <span class="skill-tag">REST APIs</span>
-                    <span class="skill-tag">Spring MVC</span>
-                    <span class="skill-tag">Hibernate / JPA</span>
-                    <span class="skill-tag">Jakarta EE</span>
-                    <span class="skill-tag">Maven</span>
-                    <span class="skill-tag">Gradle</span>
-                </div>
-            </div>
-
-            <div class="skill-group reveal reveal-delay-2">
-                <div class="skill-group-header">
-                    <div class="skill-group-icon">🌐</div>
-                    <div class="skill-group-name">Distributed Systems</div>
-                </div>
-                <div class="skill-tags">
-                    <span class="skill-tag hot">Redis (Caching)</span>
-                    <span class="skill-tag hot">Circuit Breaker</span>
-                    <span class="skill-tag">Resilience4j</span>
-                    <span class="skill-tag">Service Mesh</span>
-                    <span class="skill-tag">Rate Limiting</span>
-                    <span class="skill-tag">Fault Tolerance</span>
-                    <span class="skill-tag">Load Balancing</span>
-                </div>
-            </div>
-
-            <div class="skill-group reveal reveal-delay-3">
-                <div class="skill-group-header">
-                    <div class="skill-group-icon">💳</div>
-                    <div class="skill-group-name">Payments & Integrations</div>
-                </div>
-                <div class="skill-tags">
-                    <span class="skill-tag hot">PayPal REST API</span>
-                    <span class="skill-tag hot">Stripe</span>
-                    <span class="skill-tag">Payment Validation</span>
-                    <span class="skill-tag">Transaction Tracking</span>
-                    <span class="skill-tag">Reconciliation</span>
-                    <span class="skill-tag">Order Processing</span>
-                </div>
-            </div>
-
-            <div class="skill-group reveal reveal-delay-4">
-                <div class="skill-group-header">
-                    <div class="skill-group-icon">🤖</div>
-                    <div class="skill-group-name">AI & LLM</div>
-                </div>
-                <div class="skill-tags">
-                    <span class="skill-tag hot">Agentic AI</span>
-                    <span class="skill-tag hot">LLM Integration</span>
-                    <span class="skill-tag">OpenAI SDK</span>
-                    <span class="skill-tag">Anthropic SDK</span>
-                    <span class="skill-tag">Ollama</span>
-                    <span class="skill-tag">RAG</span>
-                    <span class="skill-tag">Embeddings</span>
-                    <span class="skill-tag">Python</span>
-                </div>
-            </div>
-
-            <div class="skill-group reveal reveal-delay-1">
-                <div class="skill-group-header">
-                    <div class="skill-group-icon">🖥️</div>
-                    <div class="skill-group-name">Frontend & Mobile</div>
-                </div>
-                <div class="skill-tags">
-                    <span class="skill-tag">React</span>
-                    <span class="skill-tag">HTML5 / CSS3</span>
-                    <span class="skill-tag">JavaScript</span>
-                    <span class="skill-tag">Bootstrap</span>
-                    <span class="skill-tag hot">Kotlin</span>
-                    <span class="skill-tag">Jetpack Compose</span>
-                    <span class="skill-tag">Firebase</span>
-                    <span class="skill-tag">Android</span>
-                </div>
-            </div>
-
-            <div class="skill-group reveal reveal-delay-2">
-                <div class="skill-group-header">
-                    <div class="skill-group-icon">🛠️</div>
-                    <div class="skill-group-name">Tools & DevOps</div>
-                </div>
-                <div class="skill-tags">
-                    <span class="skill-tag hot">Git / GitHub</span>
-                    <span class="skill-tag">MySQL</span>
-                    <span class="skill-tag">Oracle DB</span>
-                    <span class="skill-tag">Postman</span>
-                    <span class="skill-tag">IntelliJ IDEA</span>
-                    <span class="skill-tag">VS Code</span>
-                    <span class="skill-tag">Jira / Agile</span>
-                    <span class="skill-tag">Linux</span>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <div class="glow-sep"></div>
-
-    <!-- ──────────────────────────────────────────────── EXPERIENCE -->
-    <section id="experience">
-        <div class="section-label reveal">Work History</div>
-        <h2 class="section-title reveal reveal-delay-1">Where I've <em>shipped.</em></h2>
-        <div class="divider reveal reveal-delay-2"></div>
-
-        <div class="timeline">
-
-            <div class="timeline-item reveal">
-                <div class="timeline-dot">🚀</div>
-                <div class="timeline-body">
-                    <div class="timeline-company">AutonomOps AI · Hyderabad, India · On-site</div>
-                    <div class="timeline-role">Full Stack Engineer</div>
-                    <div class="timeline-period">Oct 2025 – Present · Full-time</div>
-                    <div class="timeline-card">
-                        <ul class="timeline-desc">
-                            <li>Building and maintaining microservices in Java + Spring Boot for AI-driven Agentic SRE
-                                systems (HealR platform)</li>
-                            <li>Designing REST APIs and integrating distributed services for seamless cross-system
-                                communication</li>
-                            <li>Implementing caching strategies and resilience patterns to harden system stability under
-                                production load</li>
-                            <li>Contributing end-to-end features — from backend control plane to frontend presentation
-                                layer</li>
-                            <li>Co-built and launched <strong>Architecto.dev</strong> (AI architecture co-pilot) at
-                                AIDevCon Bangalore 2026</li>
-                        </ul>
-                        <div class="timeline-tech">
-                            <span class="tech-badge">Java</span>
-                            <span class="tech-badge">Spring Boot</span>
-                            <span class="tech-badge">Microservices</span>
-                            <span class="tech-badge">Redis</span>
-                            <span class="tech-badge">REST APIs</span>
-                            <span class="tech-badge">Agentic AI</span>
-                            <span class="tech-badge">React</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="timeline-item reveal reveal-delay-1">
-                <div class="timeline-dot">💡</div>
-                <div class="timeline-body">
-                    <div class="timeline-company">AutonomOps AI · Hyderabad, India</div>
-                    <div class="timeline-role">Java Developer Intern</div>
-                    <div class="timeline-period">Jul 2025 – Sep 2025 · Internship</div>
-                    <div class="timeline-card">
-                        <ul class="timeline-desc">
-                            <li>Developed backend services using Java and Spring Boot for core platform functionality
-                            </li>
-                            <li>Built and integrated RESTful APIs enabling multi-service communication</li>
-                            <li>Contributed to control plane and data collection services for system-level operations
-                            </li>
-                            <li>Worked on service integration and backend workflows supporting distributed architecture
-                            </li>
-                        </ul>
-                        <div class="timeline-tech">
-                            <span class="tech-badge">Java</span>
-                            <span class="tech-badge">Spring Boot</span>
-                            <span class="tech-badge">REST APIs</span>
-                            <span class="tech-badge">JPA / Hibernate</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="timeline-item reveal reveal-delay-2">
-                <div class="timeline-dot">💳</div>
-                <div class="timeline-body">
-                    <div class="timeline-company">HulkHire · Hyderabad, India · Remote</div>
-                    <div class="timeline-role">Java Developer Intern</div>
-                    <div class="timeline-period">Nov 2024 – Apr 2025 · 6 months</div>
-                    <div class="timeline-card">
-                        <ul class="timeline-desc">
-                            <li>Designed and built a real-time payment integration system with PayPal REST API (order
-                                creation, capture, status tracking)</li>
-                            <li>Built a Payment Validation Service with sliding window rate limiting, amount validation,
-                                and request integrity checks</li>
-                            <li>Implemented transaction lifecycle tracking (initiated → pending → success/failure) with
-                                persistent state</li>
-                            <li>Applied circuit breaker + fault tolerance patterns to handle external service failures
-                                gracefully</li>
-                        </ul>
-                        <div class="timeline-tech">
-                            <span class="tech-badge">Spring Boot</span>
-                            <span class="tech-badge">PayPal API</span>
-                            <span class="tech-badge">Redis</span>
-                            <span class="tech-badge">Circuit Breaker</span>
-                            <span class="tech-badge">MySQL</span>
-                            <span class="tech-badge">Agile</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="timeline-item reveal reveal-delay-3">
-                <div class="timeline-dot">📚</div>
-                <div class="timeline-body">
-                    <div class="timeline-company">IIDT — International Institute of Digital Technologies · Hybrid</div>
-                    <div class="timeline-role">Java Full Stack Developer Intern</div>
-                    <div class="timeline-period">Dec 2023 – May 2024 · 6 months</div>
-                    <div class="timeline-card">
-                        <ul class="timeline-desc">
-                            <li>Full-stack development training covering Java backend, MySQL databases, and frontend
-                                fundamentals</li>
-                            <li>Built web applications using JSP, Servlets, HTML/CSS, and relational databases</li>
-                        </ul>
-                        <div class="timeline-tech">
-                            <span class="tech-badge">Java</span>
-                            <span class="tech-badge">JSP / Servlets</span>
-                            <span class="tech-badge">MySQL</span>
-                            <span class="tech-badge">HTML / CSS</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <div class="glow-sep"></div>
-
-    <!-- ──────────────────────────────────────────────── PROJECTS -->
-    <section id="projects">
-        <div class="section-label reveal">Featured Work</div>
-        <h2 class="section-title reveal reveal-delay-1">Things I've <em>built.</em></h2>
-        <div class="divider reveal reveal-delay-2"></div>
-
-        <div class="projects-grid">
-
-            <!-- LLMate — featured -->
-            <a class="project-card featured reveal" href="https://github.com/Venumadhavmule" target="_blank"
-                rel="noopener">
-                <div class="project-header">
-                    <div class="project-icon">🔗</div>
-                    <div class="project-links">
-                        <span class="open-source-badge">⭐ Open Source</span>
-                    </div>
-                </div>
-                <div class="project-type">Open Source · Spring Boot Gateway</div>
-                <div class="project-name">LLMate</div>
-                <p class="project-desc">
-                    A unified Spring Boot gateway that routes requests to <strong>16 LLM providers</strong> through a
-                    single endpoint.
-                    Eliminates SDK juggling — send one request with a model alias like "smart", "fast", or "local" and
-                    it routes
-                    to Claude, GPT-4o-mini, or Ollama respectively. Supports three-line fallback chains, streaming,
-                    embeddings,
-                    images, voice, and RAG — all from one API. Built specifically so Java developers don't need to move
-                    to Python to
-                    work seriously with AI.
-                </p>
-                <div class="project-tags">
-                    <span class="project-tag">Java</span>
-                    <span class="project-tag">Spring Boot</span>
-                    <span class="project-tag">OpenAI</span>
-                    <span class="project-tag">Anthropic</span>
-                    <span class="project-tag">Ollama</span>
-                    <span class="project-tag">LLM Gateway</span>
-                    <span class="project-tag">Fallback Chains</span>
-                    <span class="project-tag">RAG</span>
-                    <span class="project-tag">Streaming</span>
-                </div>
-            </a>
-
-            <!-- HealR / Agentic SRE -->
-            <div class="project-card reveal reveal-delay-1">
-                <div class="project-header">
-                    <div class="project-icon">🧠</div>
-                    <div class="project-links">
-                        <a class="project-link hover-target" href="https://linkedin.com/in/venumadhav-mule/"
-                            target="_blank" rel="noopener">↗</a>
-                    </div>
-                </div>
-                <div class="project-type">Production · Agentic AI Platform</div>
-                <div class="project-name">HealR — Agentic SRE</div>
-                <p class="project-desc">
-                    Backend systems for AutonomOps AI's flagship Agentic AI SRE platform. Microservices-based
-                    architecture
-                    for automated incident detection, resolution workflows, and real-time system monitoring. Built
-                    control
-                    plane + data collector services, caching layers, and resilience patterns for production reliability.
-                </p>
-                <div class="project-tags">
-                    <span class="project-tag">Java</span>
-                    <span class="project-tag">Spring Boot</span>
-                    <span class="project-tag">Microservices</span>
-                    <span class="project-tag">Redis</span>
-                    <span class="project-tag">Agentic AI</span>
-                    <span class="project-tag">SRE</span>
-                </div>
-            </div>
-
-            <!-- Architecto.dev -->
-            <div class="project-card reveal reveal-delay-2">
-                <div class="project-header">
-                    <div class="project-icon">🏗️</div>
-                    <div class="project-links">
-                        <a class="project-link hover-target" href="https://architecto.dev" target="_blank"
-                            rel="noopener">↗</a>
-                    </div>
-                </div>
-                <div class="project-type">Production · AI Tool · Launched at AIDevCon 2026</div>
-                <div class="project-name">Architecto.dev</div>
-                <p class="project-desc">
-                    AI architect platform for creating system diagrams, analyzing code patterns, generating technical
-                    docs,
-                    and evaluating security risks. Features 20+ capabilities including UML, sequence, flow, and cloud
-                    architecture diagrams. Launched live at AIDevCon Bangalore to a packed auditorium.
-                </p>
-                <div class="project-tags">
-                    <span class="project-tag">AI</span>
-                    <span class="project-tag">Architecture</span>
-                    <span class="project-tag">Diagrams</span>
-                    <span class="project-tag">Java</span>
-                    <span class="project-tag">Spring Boot</span>
-                </div>
-            </div>
-
-            <!-- Payment Integration System -->
-            <div class="project-card reveal reveal-delay-1">
-                <div class="project-header">
-                    <div class="project-icon">💳</div>
-                </div>
-                <div class="project-type">System Design · Payments</div>
-                <div class="project-name">Payment Integration System</div>
-                <p class="project-desc">
-                    End-to-end microservices-based payment processor. Validation Service with sliding window rate
-                    limiting,
-                    amount & integrity checks. Processing Service integrating PayPal APIs with full transaction
-                    lifecycle
-                    (initiated → pending → success/failure). Circuit breakers for external failure handling.
-                </p>
-                <div class="project-tags">
-                    <span class="project-tag">Spring Boot</span>
-                    <span class="project-tag">PayPal API</span>
-                    <span class="project-tag">Redis</span>
-                    <span class="project-tag">Circuit Breaker</span>
-                    <span class="project-tag">Rate Limiting</span>
-                </div>
-            </div>
-
-            <!-- LoginBuddy Android -->
-            <div class="project-card reveal reveal-delay-2">
-                <div class="project-header">
-                    <div class="project-icon">📱</div>
-                    <div class="project-links">
-                        <a class="project-link hover-target" href="https://github.com/Venumadhavmule" target="_blank"
-                            rel="noopener">↗</a>
-                    </div>
-                </div>
-                <div class="project-type">Mobile · Android</div>
-                <div class="project-name">LoginBuddy App</div>
-                <p class="project-desc">
-                    Android authentication app built with Kotlin, Jetpack Compose, and Firebase. A self-directed
-                    project that deepened Android development skills — navigating dependency conflicts, Firebase
-                    integration, and modern Compose UI patterns from scratch.
-                </p>
-                <div class="project-tags">
-                    <span class="project-tag">Kotlin</span>
-                    <span class="project-tag">Jetpack Compose</span>
-                    <span class="project-tag">Firebase</span>
-                    <span class="project-tag">Android</span>
-                </div>
-            </div>
-
-            <!-- MetricsCollector -->
-            <div class="project-card reveal reveal-delay-3">
-                <div class="project-header">
-                    <div class="project-icon">📊</div>
-                    <div class="project-links">
-                        <a class="project-link hover-target" href="https://github.com/Venumadhavmule" target="_blank"
-                            rel="noopener">↗</a>
-                    </div>
-                </div>
-                <div class="project-type">Open Source · Java</div>
-                <div class="project-name">MetricsCollector</div>
-                <p class="project-desc">
-                    Java-based metrics collection service — part of the backend infrastructure work
-                    at AutonomOps. Focused on collecting and exposing system-level operational data
-                    for monitoring and observability pipelines.
-                </p>
-                <div class="project-tags">
-                    <span class="project-tag">Java</span>
-                    <span class="project-tag">Metrics</span>
-                    <span class="project-tag">Observability</span>
-                    <span class="project-tag">Spring Boot</span>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <div class="glow-sep"></div>
-
-    <!-- ──────────────────────────────────────────────── EDUCATION -->
-    <section id="education">
-        <div class="section-label reveal">Credentials</div>
-        <h2 class="section-title reveal reveal-delay-1">Education & <em>Certifications.</em></h2>
-        <div class="divider reveal reveal-delay-2"></div>
-
-        <div class="edu-grid">
             <div>
-                <h3
-                    style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#5A5A70;margin-bottom:1.5rem;">
-                    Education</h3>
-                <div class="edu-card reveal">
-                    <div class="edu-year">Aug 2020 – Apr 2024</div>
-                    <div class="edu-degree">B.E. Computer Science & Engineering</div>
-                    <div class="edu-school">Audisankara Institute of Technology, Gudur</div>
-                    <div class="edu-grade">GPA: 8.2 / 10.0</div>
-                </div>
-                <div class="edu-card reveal reveal-delay-1" style="margin-top:1rem;">
-                    <div class="edu-year">Jun 2018 – Mar 2020</div>
-                    <div class="edu-degree">Intermediate — MPC</div>
-                    <div class="edu-school">Board of Intermediate Education, Andhra Pradesh</div>
-                    <div class="edu-grade">Score: 9.69 / 10.0</div>
-                </div>
+              <div class="info-title">Location</div>
+              <div class="info-val">Hyderabad, Telangana, India</div>
             </div>
-
+          </div>
+          <div class="info-card">
+            <div class="info-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <rect x="2" y="7" width="20" height="14" rx="2" />
+                <path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" />
+              </svg>
+            </div>
             <div>
-                <h3
-                    style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:#5A5A70;margin-bottom:1.5rem;">
-                    Certifications</h3>
-                <div class="certs-list">
-                    <div class="cert-item reveal">
-                        <div class="cert-issuer-icon">☕</div>
-                        <div>
-                            <div class="cert-name">Java 17 Masterclass</div>
-                            <div class="cert-issuer">Udemy · Jun 2024 · ID: UC-02c18bc1</div>
-                        </div>
-                    </div>
-                    <div class="cert-item reveal reveal-delay-1">
-                        <div class="cert-issuer-icon">🎨</div>
-                        <div>
-                            <div class="cert-name">Digital Skills — User Experience</div>
-                            <div class="cert-issuer">Accenture · Jun 2024</div>
-                        </div>
-                    </div>
-                </div>
+              <div class="info-title">Currently At</div>
+              <div class="info-val">AutonomOps AI &ndash; Full Stack Engineer</div>
             </div>
-        </div>
-    </section>
-
-    <div class="glow-sep"></div>
-
-    <!-- ──────────────────────────────────────────────── CONTACT -->
-    <section id="contact">
-        <div class="contact-inner">
-            <div class="section-label reveal" style="justify-content:center;">Get In Touch</div>
-            <h2 class="section-title reveal reveal-delay-1" style="text-align:center;">
-                Let's build something <em>real.</em>
-            </h2>
-            <div class="divider reveal reveal-delay-2" style="margin:1.5rem auto 2rem;"></div>
-            <p class="section-desc reveal reveal-delay-3"
-                style="margin:0 auto 1.5rem;text-align:center;max-width:460px;">
-                Open to backend engineering roles, distributed systems challenges, and conversations
-                around AI-driven platforms.
-            </p>
-            <a class="contact-email reveal reveal-delay-4 hover-target" href="mailto:venumadhavreddy.mule@gmail.com">
-                venumadhavreddy.mule@gmail.com
-            </a>
-            <div class="social-row reveal reveal-delay-4">
-                <a class="social-btn hover-target" href="https://linkedin.com/in/venumadhav-mule/" target="_blank"
-                    rel="noopener">
-                    <svg viewBox="0 0 24 24">
-                        <path
-                            d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                    </svg>
-                    LinkedIn
-                </a>
-                <a class="social-btn hover-target" href="https://github.com/Venumadhavmule" target="_blank"
-                    rel="noopener">
-                    <svg viewBox="0 0 24 24">
-                        <path
-                            d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
-                    </svg>
-                    GitHub
-                </a>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                <path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5" />
+              </svg>
             </div>
+            <div>
+              <div class="info-title">Education</div>
+              <div class="info-val">B.Tech CSE &ndash; ASIT Gudur (8.2 GPA)</div>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+              </svg>
+            </div>
+            <div>
+              <div class="info-title">Focus Areas</div>
+              <div class="info-val">Microservices &middot; Payments &middot; Agentic AI</div>
+            </div>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- ──────────────────────────────────────────────── FOOTER -->
-    <footer>
-        <div class="footer-copy">
-            © 2026 <span>Venumadhav Reddy Mule</span> · Built with precision
+  <div class="glow-sep" aria-hidden="true"></div>
+
+  <!-- ════════ SKILLS ═══════════════════════════════════ -->
+  <section id="skills">
+    <div class="section-head">
+      <div class="section-label reveal">Technical Stack</div>
+      <h2 class="section-title reveal reveal-d1">What I build <em>with.</em></h2>
+      <div class="section-divider reveal reveal-d2"></div>
+    </div>
+
+    <div class="skills-grid">
+
+      <div class="skill-group reveal">
+        <div class="sg-header">
+          <div class="sg-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3" />
+              <path
+                d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" />
+            </svg>
+          </div>
+          <div class="sg-name">Backend Core</div>
         </div>
-        <a class="back-top hover-target" href="#hero">↑ Back to top</a>
-    </footer>
+        <div class="skill-tags">
+          <span class="s-tag key">Java</span>
+          <span class="s-tag key">Spring Boot</span>
+          <span class="s-tag key">Microservices</span>
+          <span class="s-tag">REST APIs</span>
+          <span class="s-tag">Spring MVC</span>
+          <span class="s-tag">Hibernate / JPA</span>
+          <span class="s-tag">Jakarta EE</span>
+          <span class="s-tag">Maven</span>
+          <span class="s-tag">Gradle</span>
+        </div>
+      </div>
 
-    <!-- ──────────────────────────────────────────────── SCRIPTS -->
-    <script>
-        /* ── CURSOR ── */
-        const cursor = document.getElementById('cursor');
-        const ring = document.getElementById('cursor-ring');
-        let mx = 0, my = 0, rx = 0, ry = 0;
-        document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-        (function raf() {
-            rx += (mx - rx) * 0.18;
-            ry += (my - ry) * 0.18;
-            cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
-            ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-            requestAnimationFrame(raf);
-        })();
-        document.querySelectorAll('.hover-target, a, button').forEach(el => {
-            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-        });
+      <div class="skill-group reveal reveal-d1">
+        <div class="sg-header">
+          <div class="sg-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <circle cx="12" cy="5" r="2" />
+              <circle cx="5" cy="19" r="2" />
+              <circle cx="19" cy="19" r="2" />
+              <line x1="12" y1="7" x2="12" y2="11" />
+              <line x1="6.5" y1="17.5" x2="10" y2="13" />
+              <line x1="17.5" y1="17.5" x2="14" y2="13" />
+            </svg>
+          </div>
+          <div class="sg-name">Distributed Systems</div>
+        </div>
+        <div class="skill-tags">
+          <span class="s-tag key">Redis (Caching)</span>
+          <span class="s-tag key">Circuit Breaker</span>
+          <span class="s-tag">Resilience4j</span>
+          <span class="s-tag">Rate Limiting</span>
+          <span class="s-tag">Fault Tolerance</span>
+          <span class="s-tag">Load Balancing</span>
+          <span class="s-tag">Service Mesh</span>
+        </div>
+      </div>
 
-        /* ── NAV SCROLL ── */
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            navbar.classList.toggle('scrolled', window.scrollY > 40);
-        });
+      <div class="skill-group reveal reveal-d2">
+        <div class="sg-header">
+          <div class="sg-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <rect x="1" y="4" width="22" height="16" rx="2" />
+              <line x1="1" y1="10" x2="23" y2="10" />
+            </svg>
+          </div>
+          <div class="sg-name">Payments</div>
+        </div>
+        <div class="skill-tags">
+          <span class="s-tag key">PayPal REST API</span>
+          <span class="s-tag key">Stripe</span>
+          <span class="s-tag">Payment Validation</span>
+          <span class="s-tag">Transaction Tracking</span>
+          <span class="s-tag">Reconciliation</span>
+          <span class="s-tag">Order Processing</span>
+        </div>
+      </div>
 
-        /* ── ACTIVE NAV LINK ── */
-        const sections = document.querySelectorAll('section[id]');
-        const navLinks = document.querySelectorAll('.nav-links a');
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(e => {
-                if (e.isIntersecting) {
-                    navLinks.forEach(l => l.classList.remove('active'));
-                    const active = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
-                    if (active) active.classList.add('active');
-                }
-            });
-        }, { threshold: 0.4 });
-        sections.forEach(s => observer.observe(s));
+      <div class="skill-group reveal reveal-d1">
+        <div class="sg-header">
+          <div class="sg-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <rect x="4" y="4" width="16" height="16" rx="2" />
+              <rect x="9" y="9" width="6" height="6" />
+              <line x1="9" y1="1" x2="9" y2="4" />
+              <line x1="15" y1="1" x2="15" y2="4" />
+              <line x1="9" y1="20" x2="9" y2="23" />
+              <line x1="15" y1="20" x2="15" y2="23" />
+              <line x1="20" y1="9" x2="23" y2="9" />
+              <line x1="20" y1="14" x2="23" y2="14" />
+              <line x1="1" y1="9" x2="4" y2="9" />
+              <line x1="1" y1="14" x2="4" y2="14" />
+            </svg>
+          </div>
+          <div class="sg-name">AI &amp; LLM</div>
+        </div>
+        <div class="skill-tags">
+          <span class="s-tag key">Agentic AI</span>
+          <span class="s-tag key">LLM Integration</span>
+          <span class="s-tag">OpenAI SDK</span>
+          <span class="s-tag">Anthropic SDK</span>
+          <span class="s-tag">Ollama</span>
+          <span class="s-tag">RAG</span>
+          <span class="s-tag">Embeddings</span>
+          <span class="s-tag">Python</span>
+        </div>
+      </div>
 
-        /* ── MOBILE NAV ── */
-        const mobileNav = document.getElementById('mobile-nav');
-        const mobileOpen = document.getElementById('mobile-open');
-        const mobileClose = document.getElementById('mobile-close');
-        mobileOpen.addEventListener('click', () => mobileNav.classList.add('open'));
-        mobileClose.addEventListener('click', () => mobileNav.classList.remove('open'));
-        document.querySelectorAll('.mob-link').forEach(l =>
-            l.addEventListener('click', () => mobileNav.classList.remove('open'))
-        );
+      <div class="skill-group reveal reveal-d2">
+        <div class="sg-header">
+          <div class="sg-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" />
+              <line x1="8" y1="21" x2="16" y2="21" />
+              <line x1="12" y1="17" x2="12" y2="21" />
+            </svg>
+          </div>
+          <div class="sg-name">Frontend &amp; Mobile</div>
+        </div>
+        <div class="skill-tags">
+          <span class="s-tag">React</span>
+          <span class="s-tag">HTML5 / CSS3</span>
+          <span class="s-tag">JavaScript</span>
+          <span class="s-tag">Bootstrap</span>
+          <span class="s-tag key">Kotlin</span>
+          <span class="s-tag">Jetpack Compose</span>
+          <span class="s-tag">Firebase</span>
+          <span class="s-tag">Android</span>
+        </div>
+      </div>
 
-        /* ── SCROLL REVEAL ── */
-        const revealObs = new IntersectionObserver(entries => {
-            entries.forEach(e => {
-                if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
-            });
-        }, { threshold: 0.12 });
-        document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+      <div class="skill-group reveal reveal-d3">
+        <div class="sg-header">
+          <div class="sg-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path
+                d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" />
+            </svg>
+          </div>
+          <div class="sg-name">Tools &amp; DevOps</div>
+        </div>
+        <div class="skill-tags">
+          <span class="s-tag key">Git / GitHub</span>
+          <span class="s-tag">MySQL</span>
+          <span class="s-tag">Oracle DB</span>
+          <span class="s-tag">Postman</span>
+          <span class="s-tag">IntelliJ IDEA</span>
+          <span class="s-tag">VS Code</span>
+          <span class="s-tag">Jira / Agile</span>
+          <span class="s-tag">Linux</span>
+        </div>
+      </div>
 
-        /* ── TYPEWRITER ── */
-        const lines = [
-            'Full Stack Engineer (Backend-Focused)',
-            'Java · Spring Boot · Microservices',
-            'Distributed Systems · Payment Flows',
-            'Agentic AI · LLM Integrations',
-        ];
-        let li = 0, ci = 0, deleting = false;
-        const tw = document.getElementById('typewriter');
-        function type() {
-            const line = lines[li];
-            if (!deleting) {
-                tw.textContent = line.slice(0, ++ci);
-                if (ci === line.length) { deleting = true; setTimeout(type, 2200); return; }
-                setTimeout(type, 48);
-            } else {
-                tw.textContent = line.slice(0, --ci);
-                if (ci === 0) { deleting = false; li = (li + 1) % lines.length; setTimeout(type, 400); return; }
-                setTimeout(type, 24);
-            }
-        }
-        setTimeout(type, 1400);
+    </div>
+  </section>
 
-        /* ── HERO CANVAS ── */
-        const canvas = document.getElementById('hero-canvas');
-        const ctx = canvas.getContext('2d');
-        let W, H, particles = [];
+  <div class="glow-sep" aria-hidden="true"></div>
 
-        function resize() {
-            W = canvas.width = canvas.offsetWidth;
-            H = canvas.height = canvas.offsetHeight;
-        }
-        resize();
-        window.addEventListener('resize', resize);
+  <!-- ════════ EXPERIENCE ═══════════════════════════════ -->
+  <section id="experience">
+    <div class="section-head">
+      <div class="section-label reveal">Work History</div>
+      <h2 class="section-title reveal reveal-d1">Where I have <em>shipped.</em></h2>
+      <div class="section-divider reveal reveal-d2"></div>
+    </div>
 
-        const COLORS = ['#F5A623', '#52D9C0', '#FFFFFF'];
-        const N = Math.floor(window.innerWidth / 16);
+    <div class="timeline">
 
-        for (let i = 0; i < N; i++) {
-            particles.push({
-                x: Math.random() * 1600,
-                y: Math.random() * 900,
-                vx: (Math.random() - 0.5) * 0.35,
-                vy: (Math.random() - 0.5) * 0.35,
-                r: Math.random() * 1.5 + 0.5,
-                c: COLORS[Math.floor(Math.random() * COLORS.length)],
-                a: Math.random() * 0.5 + 0.15
-            });
-        }
+      <!-- AutonomOps Full Stack Engineer -->
+      <div class="tl-item reveal">
+        <div class="tl-logo" title="AutonomOps AI">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShvqj4r57P3KEvssAIDqZi0VjiAGddaCoMqg&s"
+            alt="AutonomOps AI" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <span class="tl-initial" style="display:none">A</span>
+        </div>
+        <div class="tl-body">
+          <div class="tl-company">AutonomOps AI &middot; Hyderabad, India &middot; On-site</div>
+          <div class="tl-role">Full Stack Engineer</div>
+          <div class="tl-period">Oct 2025 &ndash; Present &middot; Full-time</div>
+          <div class="tl-card">
+            <ul class="tl-list">
+              <li>Building and maintaining microservices in Java and Spring Boot for AI-driven Agentic SRE systems
+                across the HealR platform</li>
+              <li>Designing REST APIs and integrating distributed services for reliable cross-system communication</li>
+              <li>Implementing caching strategies and resilience patterns to harden system stability under production
+                load</li>
+              <li>Contributing end-to-end features from backend control plane to frontend presentation layer</li>
+              <li>Co-built and launched <strong>Architecto.dev</strong> at AIDevCon Bangalore 2026</li>
+            </ul>
+            <div class="tl-tech">
+              <span class="tech-pill">Java</span>
+              <span class="tech-pill">Spring Boot</span>
+              <span class="tech-pill">Microservices</span>
+              <span class="tech-pill">Redis</span>
+              <span class="tech-pill">REST APIs</span>
+              <span class="tech-pill">Agentic AI</span>
+              <span class="tech-pill">React</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        function draw() {
-            ctx.clearRect(0, 0, W, H);
-            // draw connections
-            for (let i = 0; i < particles.length; i++) {
-                const p = particles[i];
-                for (let j = i + 1; j < particles.length; j++) {
-                    const q = particles[j];
-                    const dx = p.x - q.x, dy = p.y - q.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 140) {
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(q.x, q.y);
-                        ctx.strokeStyle = `rgba(245,166,35,${0.08 * (1 - dist / 140)})`;
-                        ctx.lineWidth = 0.6;
-                        ctx.stroke();
-                    }
-                }
-            }
-            // draw dots
-            particles.forEach(p => {
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                ctx.fillStyle = p.c;
-                ctx.globalAlpha = p.a;
-                ctx.fill();
-                ctx.globalAlpha = 1;
-                // move
-                p.x += p.vx; p.y += p.vy;
-                if (p.x < 0 || p.x > W) p.vx *= -1;
-                if (p.y < 0 || p.y > H) p.vy *= -1;
-            });
-            requestAnimationFrame(draw);
-        }
-        draw();
+      <!-- AutonomOps Intern -->
+      <div class="tl-item reveal reveal-d1">
+        <div class="tl-logo" title="AutonomOps AI">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShvqj4r57P3KEvssAIDqZi0VjiAGddaCoMqg&s"
+            alt="AutonomOps AI" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <span class="tl-initial" style="display:none">A</span>
+        </div>
+        <div class="tl-body">
+          <div class="tl-company">AutonomOps AI &middot; Hyderabad, India</div>
+          <div class="tl-role">Java Developer Intern</div>
+          <div class="tl-period">Jul 2025 &ndash; Sep 2025 &middot; Internship</div>
+          <div class="tl-card">
+            <ul class="tl-list">
+              <li>Developed backend services using Java and Spring Boot for core platform functionality</li>
+              <li>Built and integrated RESTful APIs enabling multi-service communication</li>
+              <li>Contributed to control plane and data collection services for system-level operations</li>
+              <li>Worked on service integration and backend workflows supporting distributed architecture</li>
+            </ul>
+            <div class="tl-tech">
+              <span class="tech-pill">Java</span>
+              <span class="tech-pill">Spring Boot</span>
+              <span class="tech-pill">REST APIs</span>
+              <span class="tech-pill">JPA / Hibernate</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        /* ── COUNTER ANIMATION ── */
-        function animateCounter(el, target, suffix) {
-            let start = 0;
-            const step = () => {
-                start += Math.ceil(target / 40);
-                if (start >= target) { el.textContent = target + suffix; return; }
-                el.textContent = start + suffix;
-                requestAnimationFrame(step);
-            };
-            step();
-        }
-        const statsObs = new IntersectionObserver(entries => {
-            entries.forEach(e => {
-                if (e.isIntersecting) {
-                    const nums = e.target.querySelectorAll('.stat-num');
-                    nums[0] && animateCounter(nums[0], 11, '+');
-                    nums[1] && animateCounter(nums[1], 16, '');
-                    nums[2] && animateCounter(nums[2], 4, '');
-                    statsObs.unobserve(e.target);
-                }
-            });
-        }, { threshold: 0.5 });
-        const heroStats = document.querySelector('.hero-stats');
-        if (heroStats) statsObs.observe(heroStats);
-    </script>
+      <!-- HulkHire -->
+      <div class="tl-item reveal reveal-d2">
+        <div class="tl-logo" title="HulkHire">
+          <img
+            src="https://media.licdn.com/dms/image/v2/C560BAQEfoTnUlI4QCQ/company-logo_200_200/company-logo_200_200/0/1671724318899/hulkhire_logo?e=2147483647&v=beta&t=mpDGLG_n2UMbcVZxT-q9VZe8G0YBFDvkdK3sM1TSIMg"
+            alt="HulkHire" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <span class="tl-initial" style="display:none">H</span>
+        </div>
+        <div class="tl-body">
+          <div class="tl-company">HulkHire &middot; Hyderabad, India &middot; Remote</div>
+          <div class="tl-role">Java Developer Intern</div>
+          <div class="tl-period">Nov 2024 &ndash; Apr 2025 &middot; 6 months</div>
+          <div class="tl-card">
+            <ul class="tl-list">
+              <li>Designed and built a real-time payment integration system with PayPal REST API covering order
+                creation, capture, and status tracking</li>
+              <li>Built a Payment Validation Service with sliding window rate limiting, amount validation, and request
+                integrity checks</li>
+              <li>Implemented transaction lifecycle tracking across initiated, pending, success, and failure states with
+                persistent state management</li>
+              <li>Applied circuit breaker and fault tolerance patterns to handle external service failures gracefully
+              </li>
+            </ul>
+            <div class="tl-tech">
+              <span class="tech-pill">Spring Boot</span>
+              <span class="tech-pill">PayPal API</span>
+              <span class="tech-pill">Redis</span>
+              <span class="tech-pill">Circuit Breaker</span>
+              <span class="tech-pill">MySQL</span>
+              <span class="tech-pill">Agile</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal reveal-d3">
+        <div class="tl-logo" title="IIDT">
+          <img
+            src="https://media.licdn.com/dms/image/v2/C4D0BAQH8pw6si3kNig/company-logo_200_200/company-logo_200_200/0/1631321432367?e=2147483647&v=beta&t=tZXkKbqPX1PqKs7ydITaMjBx_s2SpDjCIXXRBRc3V2I"
+            alt="IIDT" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <span class="tl-initial" style="display:none">II</span>
+        </div>
+        <div class="tl-body">
+          <div class="tl-company">IIDT &middot; International Institute of Digital Technologies &middot; Hybrid</div>
+          <div class="tl-role">Java Full Stack Developer Intern</div>
+          <div class="tl-period">Dec 2023 &ndash; May 2024 &middot; 6 months</div>
+          <div class="tl-card">
+            <ul class="tl-list">
+              <li>Full-stack development training covering Java backend, MySQL databases, and frontend fundamentals</li>
+              <li>Built web applications using JSP, Servlets, HTML/CSS, and relational databases</li>
+            </ul>
+            <div class="tl-tech">
+              <span class="tech-pill">Java</span>
+              <span class="tech-pill">JSP / Servlets</span>
+              <span class="tech-pill">MySQL</span>
+              <span class="tech-pill">HTML / CSS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="glow-sep" aria-hidden="true"></div>
+
+  <!-- ════════ PROJECTS ════════════════════════════════ -->
+  <section id="projects">
+    <div class="section-head">
+      <div class="section-label reveal">Featured Work</div>
+      <h2 class="section-title reveal reveal-d1">Things I have <em>built.</em></h2>
+      <div class="section-divider reveal reveal-d2"></div>
+    </div>
+
+    <div class="projects-grid">
+
+      <!-- LLMate — featured, 2 columns -->
+      <a class="proj-card featured reveal" href="https://github.com/Venumadhavmule/LLMate" target="_blank"
+        rel="noopener">
+        <div class="proj-img-wrap">
+          <img src="https://github.com/Venumadhavmule/LLMate-Chat/raw/main/docs/llmate-interface-dark.png?raw=true"
+            alt="LLMate Preview" class="proj-preview" loading="lazy">
+        </div>
+        <div class="proj-header">
+          <div class="proj-mono">LM</div>
+          <div class="proj-badges">
+            <span class="badge-oss">Open Source</span>
+          </div>
+        </div>
+        <div class="proj-type">Open Source &middot; Spring Boot LLM Gateway</div>
+        <div class="proj-name">LLMate</div>
+        <p class="proj-desc">
+          A unified Spring Boot gateway that routes requests to <strong>16 LLM providers</strong> through
+          a single endpoint. Send one request with a model alias like "smart", "fast", or "local" and it
+          routes to Claude, GPT-4o-mini, or Ollama respectively. Supports three-line fallback chains,
+          streaming, embeddings, images, voice, and RAG from one API. Built so Java developers do not
+          need to switch to Python to work seriously with AI.
+        </p>
+        <div class="proj-tags">
+          <span class="p-tag">Java</span>
+          <span class="p-tag">Spring Boot</span>
+          <span class="p-tag">OpenAI</span>
+          <span class="p-tag">Anthropic</span>
+          <span class="p-tag">Ollama</span>
+          <span class="p-tag">LLM Gateway</span>
+          <span class="p-tag">Fallback Chains</span>
+          <span class="p-tag">RAG</span>
+          <span class="p-tag">Streaming</span>
+        </div>
+      </a>
+
+      <!-- HealR -->
+      <a class="proj-card reveal reveal-d1" href="https://autonomops.ai/" target="_blank" rel="noopener">
+        <div class="proj-img-wrap">
+          <img src="HealR_Agentic_Sre.png" alt="HealR - Agentic SRE Preview" class="proj-preview" loading="lazy">
+        </div>
+        <div class="proj-header">
+          <div class="proj-mono">HR</div>
+          <div class="proj-badges">
+            <div class="proj-ext-link" aria-label="Visit AutonomOps">&#8599;</div>
+          </div>
+        </div>
+        <div class="proj-type">Production &middot; Agentic AI Platform</div>
+        <div class="proj-name">HealR &ndash; Agentic SRE</div>
+        <p class="proj-desc">
+          Backend systems for AutonomOps AI's flagship Agentic AI SRE platform. Microservices architecture
+          for automated incident detection, resolution workflows, and real-time monitoring. Built control
+          plane and data collector services with caching layers and resilience patterns.
+        </p>
+        <div class="proj-tags">
+          <span class="p-tag">Java</span>
+          <span class="p-tag">Spring Boot</span>
+          <span class="p-tag">Microservices</span>
+          <span class="p-tag">Redis</span>
+          <span class="p-tag">Agentic AI</span>
+          <span class="p-tag">SRE</span>
+        </div>
+      </a>
+
+      <!-- Architecto.dev -->
+      <a class="proj-card reveal reveal-d2" href="https://architecto.dev" target="_blank" rel="noopener">
+        <div class="proj-img-wrap">
+          <img src="Architecto_Banner.png" alt="Architecto Preview" class="proj-preview" loading="lazy">
+        </div>
+        <div class="proj-header">
+          <div class="proj-mono">AC</div>
+          <div class="proj-badges">
+            <div class="proj-ext-link" aria-label="Visit Architecto.dev">&#8599;</div>
+          </div>
+        </div>
+        <div class="proj-type">Production &middot; Launched at AIDevCon Bangalore 2026</div>
+        <div class="proj-name">Architecto.dev</div>
+        <p class="proj-desc">
+          AI architect platform for creating system diagrams, analysing code patterns, generating
+          technical docs, and evaluating security risks. Features 20+ capabilities including UML,
+          sequence, flow, and cloud architecture diagrams. Launched live to a packed auditorium.
+        </p>
+        <div class="proj-tags">
+          <span class="p-tag">AI</span>
+          <span class="p-tag">Architecture</span>
+          <span class="p-tag">Diagrams</span>
+          <span class="p-tag">Java</span>
+          <span class="p-tag">Spring Boot</span>
+        </div>
+      </a>
+
+      <!-- Payment Integration System -->
+      <div class="proj-card reveal reveal-d1">
+        <div class="proj-header">
+          <div class="proj-mono">PI</div>
+        </div>
+        <div class="proj-type">System Design &middot; Payments</div>
+        <div class="proj-name">Payment Integration System</div>
+        <p class="proj-desc">
+          End-to-end microservices payment processor. Validation Service with sliding window rate
+          limiting, amount and integrity checks. Processing Service integrating PayPal APIs with
+          full transaction lifecycle. Circuit breakers for external failure handling.
+        </p>
+        <div class="proj-tags">
+          <span class="p-tag">Spring Boot</span>
+          <span class="p-tag">PayPal API</span>
+          <span class="p-tag">Redis</span>
+          <span class="p-tag">Circuit Breaker</span>
+          <span class="p-tag">Rate Limiting</span>
+        </div>
+      </div>
+
+      <!-- Train Ticket Enquiry System -->
+      <a class="proj-card reveal reveal-d2" href="https://github.com/Venumadhavmule/Train-Ticket-Enquiry-System"
+        target="_blank" rel="noopener">
+        <div class="proj-img-wrap">
+          <img
+            src="https://github.com/Venumadhavmule/Train-Ticket-Enquiry-System/raw/main/src/Screenshots/User_Screenshots/Fare%20Enquiry.png"
+            alt="Train Ticket Enquiry Preview" class="proj-preview" loading="lazy">
+        </div>
+        <div class="proj-header">
+          <div class="proj-mono">TT</div>
+          <div class="proj-badges">
+            <div class="proj-ext-link" aria-label="View on GitHub">&#8599;</div>
+          </div>
+        </div>
+        <div class="proj-type">Open Source &middot; Java Web Application</div>
+        <div class="proj-name">Train Ticket Enquiry System</div>
+        <p class="proj-desc">
+          Java-based Train Ticket Enquiry System with train schedule lookups, seat availability
+          checks, and PNR status queries. Built with a Spring Boot backend, MySQL for persistence,
+          and a clean web interface covering end-to-end user flows.
+        </p>
+        <div class="proj-tags">
+          <span class="p-tag">Java</span>
+          <span class="p-tag">Spring Boot</span>
+          <span class="p-tag">MySQL</span>
+          <span class="p-tag">REST APIs</span>
+          <span class="p-tag">Web App</span>
+        </div>
+      </a>
+
+      <!-- LoginBuddy -->
+      <a class="proj-card reveal reveal-d3" href="https://github.com/Venumadhavmule/LoginBuddy" target="_blank"
+        rel="noopener">
+        <div class="proj-img-wrap">
+          <img src="https://github.com/Venumadhavmule/LoginBuddy/raw/master/Screenshots/Login_Screen.jpg"
+            alt="LoginBuddy Preview" class="proj-preview" loading="lazy">
+        </div>
+        <div class="proj-header">
+          <div class="proj-mono">LB</div>
+          <div class="proj-badges">
+            <div class="proj-ext-link" aria-label="View on GitHub">&#8599;</div>
+          </div>
+        </div>
+        <div class="proj-type">Mobile &middot; Android</div>
+        <div class="proj-name">LoginBuddy App</div>
+        <p class="proj-desc">
+          Android authentication app built with Kotlin, Jetpack Compose, and Firebase. A
+          self-directed project navigating dependency conflicts, Firebase integration, and
+          modern Compose UI patterns from scratch. Published to GitHub for others to try.
+        </p>
+        <div class="proj-tags">
+          <span class="p-tag">Kotlin</span>
+          <span class="p-tag">Jetpack Compose</span>
+          <span class="p-tag">Firebase</span>
+          <span class="p-tag">Android</span>
+        </div>
+      </a>
+
+      <!-- MetricsCollector -->
+      <a class="proj-card reveal reveal-d1" href="https://github.com/Venumadhavmule/Metricscollector" target="_blank"
+        rel="noopener">
+        <div class="proj-header">
+          <div class="proj-mono">MC</div>
+          <div class="proj-badges">
+            <div class="proj-ext-link" aria-label="View on GitHub">&#8599;</div>
+          </div>
+        </div>
+        <div class="proj-type">Open Source &middot; Java</div>
+        <div class="proj-name">MetricsCollector</div>
+        <p class="proj-desc">
+          Java-based metrics collection service built as part of the AutonomOps AI
+          infrastructure. Collects and exposes system-level operational data feeding
+          into monitoring and observability pipelines.
+        </p>
+        <div class="proj-tags">
+          <span class="p-tag">Java</span>
+          <span class="p-tag">Metrics</span>
+          <span class="p-tag">Observability</span>
+          <span class="p-tag">Spring Boot</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <div class="glow-sep" aria-hidden="true"></div>
+
+  <!-- ════════ EDUCATION ═══════════════════════════════ -->
+  <section id="education">
+    <div class="section-head">
+      <div class="section-label reveal">Credentials</div>
+      <h2 class="section-title reveal reveal-d1">Education &amp; <em>Certifications.</em></h2>
+      <div class="section-divider reveal reveal-d2"></div>
+    </div>
+
+    <div class="edu-wrap">
+
+      <!-- Education -->
+      <div>
+        <div class="edu-col-label">Education</div>
+
+        <div class="edu-card reveal">
+          <div class="edu-logo">
+            <img src="https://bangalore.audisankara.ac.in/logo.png" alt="Audisankara Institute of Technology"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+            <span class="edu-initial" style="display:none">AIT</span>
+          </div>
+          <div>
+            <div class="edu-year">Aug 2020 &ndash; Apr 2024</div>
+            <div class="edu-degree">B.Tech Computer Science &amp; Engineering</div>
+            <div class="edu-school">Audisankara Institute of Technology, Gudur</div>
+            <div class="edu-grade">GPA: 8.2 / 10.0</div>
+          </div>
+        </div>
+
+        <div class="edu-card reveal reveal-d1">
+          <div class="edu-logo">
+            <img
+              src="https://media.licdn.com/dms/image/v2/C4D0BAQGwTitTne0PuA/company-logo_200_200/company-logo_200_200/0/1647509061924?e=2147483647&v=beta&t=U0TMVPse-zVIiMOC6JjnUGo5Gg_IayhncoO46tdTO-A"
+              alt="Board of Intermediate Education"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+            <span class="edu-initial" style="display:none">AP</span>
+          </div>
+          <div>
+            <div class="edu-year">Jun 2018 &ndash; Mar 2020</div>
+            <div class="edu-degree">Intermediate &ndash; MPC</div>
+            <div class="edu-school">Board of Intermediate Education, Andhra Pradesh</div>
+            <div class="edu-grade">Score: 9.69 / 10.0</div>
+          </div>
+        </div>
+        <div class="edu-card reveal reveal-d2">
+          <div class="edu-logo">
+            <img src="Board_Of_Secondary_Education.png" alt="The Board of Secondary Education, Andhra Pradesh (BSEAP)"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+            <span class="edu-initial" style="display:none">SSC</span>
+          </div>
+          <div>
+            <div class="edu-year">Jun 2017 &ndash; Mar 2018</div>
+            <div class="edu-degree">Secondary School Certificate (Class 10)</div>
+            <div class="edu-school">The Board of Secondary Education, Andhra Pradesh (BSEAP)</div>
+            <div class="edu-grade">Grade: 9.7 / 10.0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Certifications -->
+      <div>
+        <div class="edu-col-label">Certifications</div>
+        <div class="cert-list">
+          <div class="cert-card reveal">
+            <div class="cert-logo">
+              <img
+                src="https://yt3.googleusercontent.com/Y_G09q2it3FZMrbbxwLjgMjSanR1mZAsXnEE6g6ZaBXlq2dLIRsKqSrGTCMuiyvvVavu-xFvPEc=s160-c-k-c0x00ffffff-no-rj"
+                alt="Udemy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+              <span class="cert-mono" style="display:none">J17</span>
+            </div>
+            <div>
+              <div class="cert-name">Java 17 Masterclass</div>
+              <div class="cert-issuer">Udemy &middot; Jun 2024 &middot; ID: UC-02c18bc1</div>
+            </div>
+          </div>
+          <div class="cert-card reveal reveal-d1">
+            <div class="cert-logo">
+              <img
+                src="https://media.licdn.com/dms/image/v2/D4D0BAQEgtOEcxlXMog/company-logo_200_200/B4DZfqEQWkHAAQ-/0/1751978673981/accenture_logo?e=1780531200&v=beta&t=Zk705FEQ3FH6MC0ak2autVSYp57n6uN9UQcVaElT06o"
+                alt="Accenture" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+              <span class="cert-mono" style="display:none">UX</span>
+            </div>
+            <div>
+              <div class="cert-name">Digital Skills &ndash; User Experience</div>
+              <div class="cert-issuer">Accenture &middot; Jun 2024</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="glow-sep" aria-hidden="true"></div>
+
+  <!-- ════════ CONTACT ═════════════════════════════════ -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="section-label reveal" style="justify-content:center;">Get In Touch</div>
+      <h2 class="section-title reveal reveal-d1" style="text-align:center;">
+        Let's build something <em>real.</em>
+      </h2>
+      <div class="section-divider reveal reveal-d2" style="margin:1.2rem auto 0;"></div>
+
+      <a class="contact-email reveal reveal-d3" href="mailto:venumadhavreddy.mule@gmail.com">
+        venumadhavreddy.mule@gmail.com
+      </a>
+      <p class="contact-note reveal reveal-d3">
+        Open to backend engineering roles, distributed systems challenges,<br>
+        and conversations around AI-driven platforms.
+      </p>
+
+      <div class="social-row reveal reveal-d4">
+        <a class="social-btn" href="https://linkedin.com/in/venumadhav-mule/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+          </svg>
+          LinkedIn
+        </a>
+        <a class="social-btn" href="https://github.com/Venumadhavmule" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+          </svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ FOOTER ══════════════════════════════════ -->
+  <footer>
+    <div class="footer-copy">
+      &copy; 2026 <span>Venumadhav Reddy Mule</span> &middot; Built with precision
+    </div>
+    <a class="back-top" href="#hero">&uarr; Back to top</a>
+  </footer>
+
+  <script src="script.js" defer></script>
 </body>
 
 </html>
