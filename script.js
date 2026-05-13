@@ -223,9 +223,33 @@ const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').m
   const statsEl = document.querySelector('.hero-stats');
   if (!statsEl) return;
 
-  const nums    = statsEl.querySelectorAll('.stat-num');
-  const targets = [11, 16, 4];
-  const suffixes = ['+', '', ''];
+  const nums = statsEl.querySelectorAll('.stat-num');
+  
+  // Elite Dynamic Experience Logic
+  const calculateExperience = () => {
+    const segment1Start = new Date('2024-11-01');
+    const segment1End   = new Date('2025-04-30');
+    const segment2Start = new Date('2025-07-01');
+    const now           = new Date();
+
+    // Segment 1: Nov 2024 to April 2025 (fixed 6 months)
+    const months1 = 6;
+
+    // Segment 2: July 2025 to Present (dynamic)
+    let months2 = (now.getFullYear() - segment2Start.getFullYear()) * 12;
+    months2 += now.getMonth() - segment2Start.getMonth();
+    if (now.getDate() < segment2Start.getDate()) months2--;
+
+    const totalMonths = months1 + Math.max(0, months2);
+    const years = Math.floor(totalMonths / 12);
+    const months = totalMonths % 12;
+
+    return { years, months, total: totalMonths };
+  };
+
+  const exp = calculateExperience();
+  const targets = [exp.total, 16, 4];
+  const suffixes = ['', '', ''];
   let ran = false;
 
   const run = () => {
@@ -235,8 +259,21 @@ const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').m
       let cur = 0;
       const target = targets[i];
       const step = () => {
-        cur = Math.min(cur + Math.ceil(target / 32), target);
-        el.textContent = cur + suffixes[i];
+        cur = Math.min(cur + Math.ceil(target / 42), target);
+        
+        if (i === 0) {
+          const y = Math.floor(cur / 12);
+          const m = cur % 12;
+          el.textContent = `${y}.${m}+`;
+          
+          const label = el.nextElementSibling;
+          if (label) {
+            label.innerHTML = y >= 1 ? `Years of Total<br>Experience` : `Months of Total<br>Experience`;
+          }
+        } else {
+          el.textContent = cur + suffixes[i];
+        }
+        
         if (cur < target) requestAnimationFrame(step);
       };
       step();
