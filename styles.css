@@ -390,7 +390,8 @@ section { padding: 7rem 5vw; }
 }
 @keyframes orbit-spin { to { transform: rotate(360deg); } }
 .profile-status {
-  position: absolute; bottom: 10px; right: -18px;
+  position: absolute; bottom: -8px; right: 50%;
+  transform: translateX(50%);
   background: var(--bg3);
   border: 1px solid var(--border2);
   border-radius: 100px;
@@ -400,6 +401,7 @@ section { padding: 7rem 5vw; }
   font-size: 0.62rem; font-weight: 700;
   letter-spacing: 0.09em; text-transform: uppercase;
   color: var(--teal); white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
 .status-dot {
   width: 6px; height: 6px;
