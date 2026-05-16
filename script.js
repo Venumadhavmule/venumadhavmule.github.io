@@ -3,7 +3,10 @@
 ════════════════════════════════════════════════════════ */
 
 /* ── 1. DEVICE DETECTION ──────────────────────────────── */
-const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches ||
+                      window.matchMedia('(max-width: 1024px)').matches ||
+                      ('ontouchstart' in window) ||
+                      (navigator.maxTouchPoints > 0);
 
 /* ── 2. CUSTOM CURSOR ─────────────────────────────────── */
 (function initCursor() {

@@ -83,11 +83,11 @@ ul { list-style: none; }
   animation-duration: 1.8s;
 }
 
-/* Disable cursor on touch devices */
-@media (hover: none) and (pointer: coarse) {
+/* Disable cursor on touch devices and mobile viewports */
+@media (hover: none) and (pointer: coarse), (max-width: 1024px), (pointer: coarse) {
   #cursor, #cursor-ring { display: none !important; }
-  body { cursor: auto !important; }
-  a, button { cursor: pointer !important; }
+  body, html { cursor: auto !important; }
+  a, button, .btn-primary, .btn-outline, .social-btn, .proj-card, .nav-logo { cursor: pointer !important; }
 }
 
 /* ── 5. NAVIGATION ────────────────────────────────────── */
